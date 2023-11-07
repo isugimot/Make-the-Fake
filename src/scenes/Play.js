@@ -12,6 +12,7 @@ class Play extends Phaser.Scene {
         level = 0;
         Bpoint = 0;
         this.bonus;
+        this.shake = false;
         this.hard = false;
 
         this.bgm = this.sound.add('loopBGM', {
@@ -85,18 +86,19 @@ class Play extends Phaser.Scene {
 
     levelBump(){
         level++;
+        if(this.shake == true){
+            this.cameras.main.shake(1000, 0.005);
+        }
         if(level % 5 == 0) {
             if(this.rocketSpeed >= this.rocketSpeedMax){
                 this.rocketSpeed -= 25;
                 this.bgm.rate += 0.01;
             }
         }
-
         if(level == 50){
-            this.player.scaleY = 0.75;
+            this.shake = true;
         }
         if(level == 100){
-            this.player.scaleY = 0.5;
             this.hard = true;
         }
     }

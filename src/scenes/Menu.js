@@ -34,10 +34,10 @@ class Menu extends Phaser.Scene {
             frameRate: 30,
             repeat: -1
         });
-        let title1 = this.add.bitmapText(centerX, centerY, 'gem', 'SPACE RUNNER', 64).setOrigin(0.5).setTint(0xffff00);
-        let explanation = this.add.bitmapText(centerX, centerY+100, 'gem', 'PRESS UP ARROW TO START').setOrigin(0.5).setTint(0xffff00);
-        let control = this.add.bitmapText(centerX, centerY+150, 'gem', 'USE UP AND DOWN ARROW TO MOVE').setOrigin(0.5).setTint(0xffff00);
-        let citation = this.add.bitmapText(centerX, centerY+200, 'gem', 'Music by Maksym Dudchyk from Pixabay, SE from Pixabay', 10).setOrigin(0.5).setTint(0xffff00);
+        this.add.bitmapText(centerX, centerY, 'gem', 'SPACE RUNNER', 64).setOrigin(0.5).setTint(0xffff00);
+        this.add.bitmapText(centerX, centerY+100, 'gem', 'PRESS UP ARROW TO START').setOrigin(0.5).setTint(0xffff00);
+        this.add.bitmapText(centerX, centerY+150, 'gem', 'USE UP AND DOWN ARROW TO MOVE').setOrigin(0.5).setTint(0xffff00);
+        this.add.bitmapText(centerX, centerY+200, 'gem', 'Music by Maksym Dudchyk from Pixabay, SE from Pixabay', 10).setOrigin(0.5).setTint(0xffff00);
         cursors = this.input.keyboard.createCursorKeys();
     }
 
