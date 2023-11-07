@@ -4,9 +4,14 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.starfield = this.add.tileSprite(0, 0, 640, 500, 'starfield').setOrigin(0, 0);
+        this.starfield2 = this.add.tileSprite(0,0, 640, 500, 'starfield2').setOrigin(0,0);
         this.rocketSpeed = -300;
         this.rocketSpeedMax = -1500;
+        this.bonusSpeed = -50;
         level = 0;
+        Bpoint = 0;
+        this.bonus;
         this.hard = false;
 
         this.bgm = this.sound.add('loopBGM', {
@@ -26,8 +31,14 @@ class Play extends Phaser.Scene {
         this.rocketGroup = this.add.group({
             runChildUpdate: true
         });
+
+        this.bonusGroup = this.add.group({
+            runChildUpdate: true
+        });
+        
         this.time.delayedCall(2500, () => {
             this.addRocket();
+            this.addBonus();
         });
 
         this.difficultyTimer = this.time.addEvent({
@@ -36,6 +47,8 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+
         cursors = this.input.keyboard.createCursorKeys();
         
     }
@@ -43,10 +56,22 @@ class Play extends Phaser.Scene {
     addRocket(){
         let speedVariance = Phaser.Math.Between(0, 50);
         let rocket = new Rocket(this, this.rocketSpeed - speedVariance);
+        let rocket2;
+        if(this.hard == true){
+            rocket2 = new Rocket(this, this.rocketSpeed - speedVariance);
+        }
         this.rocketGroup.add(rocket);
     }
 
+    addBonus(){
+        this.bonus = new Bonus(this, this.bonusSpeed - Phaser.Math.Between(-10, 10));
+    }
+
     update(){
+
+        this.starfield.tilePositionX -= this.rocketSpeed/2;
+        this.starfield2.tilePositionX -= 3;
+        this.starfield2.tilePositionY -= 4;
         if(!this.player.destroyed){
             if(cursors.up.isDown){
                 this.player.body.velocity.y -= playerVelocity;
@@ -54,7 +79,7 @@ class Play extends Phaser.Scene {
                 this.player.body.velocity.y += playerVelocity;
             }
             this.physics.world.collide(this.player, this.rocketGroup, this.playerCollision, null, this);
-
+            this.physics.world.collide(this.player, this.bonus, this.bonusPoint, null, this);
         }
     }
 
@@ -89,4 +114,9 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(2000, () => {this.scene.start('EndScene');});
     }
 
+    bonusPoint(){
+        Bpoint += 5;
+        this.bonus.destroy();
+        this.addBonus();
+    }
 }

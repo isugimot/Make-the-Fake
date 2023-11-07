@@ -1,6 +1,6 @@
 class Rocket extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity) {
-        super(scene, game.config.width + rocketWidth, Phaser.Math.Between(rocketHeight/2, game.config.height - rocketHeight/2), 'rocket');
+        super(scene, game.config.width + rocketWidth, Phaser.Math.Between(rocketHeight/2, game.config.height - rocketHeight/2), 'missle', 0);
         
         this.parentScene = scene;
         this.parentScene.add.existing(this);
@@ -8,6 +8,8 @@ class Rocket extends Phaser.Physics.Arcade.Sprite {
         this.setVelocityX(velocity);
         this.setImmovable();
         this.newRocket = true;
+
+        this.anims.play('rocket');
     }
 
     update() {
