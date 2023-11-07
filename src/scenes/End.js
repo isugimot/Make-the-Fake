@@ -32,7 +32,11 @@ class End extends Phaser.Scene {
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(cursors.up)){
-            this.scene.start('PlayScene');
+            this.sound.play('retry');
+            this.cameras.main.flash(500);
+            this.time.delayedCall(1000, () => {this.cameras.main.flash(500);});
+            this.time.delayedCall(1500, () => {this.cameras.main.flash(500);});
+            this.time.delayedCall(3000, () => {this.scene.start('PlayScene');});
         }
     }
 }

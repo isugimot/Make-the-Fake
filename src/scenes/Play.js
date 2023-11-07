@@ -48,9 +48,9 @@ class Play extends Phaser.Scene {
             loop: true
         });
 
-
-        cursors = this.input.keyboard.createCursorKeys();
         
+        cursors = this.input.keyboard.createCursorKeys();
+        this.score = this.add.bitmapText(0, 20, 'gem', level).setOrigin(0, 0.5);
     }
 
     addRocket(){
@@ -68,9 +68,9 @@ class Play extends Phaser.Scene {
     }
 
     update(){
-
-        this.starfield.tilePositionX -= this.rocketSpeed/2;
-        this.starfield2.tilePositionX -= 3;
+        this.score.text = level;
+        this.starfield.tilePositionX += this.rocketSpeed/2;
+        this.starfield2.tilePositionX += 3;
         this.starfield2.tilePositionY -= 4;
         if(!this.player.destroyed){
             if(cursors.up.isDown){
@@ -91,6 +91,7 @@ class Play extends Phaser.Scene {
                 this.bgm.rate += 0.01;
             }
         }
+
         if(level == 50){
             this.player.scaleY = 0.75;
         }
@@ -109,13 +110,15 @@ class Play extends Phaser.Scene {
             ease: 'Linear',
             duration: 2000,
         });
-
+        this.sound.play('death');
         this.player.destroy();
+        this.cameras.main.flash(2000);
         this.time.delayedCall(2000, () => {this.scene.start('EndScene');});
     }
 
     bonusPoint(){
-        Bpoint += 5;
+        Bpoint += 10;
+        this.sound.play('bonus');
         this.bonus.destroy();
         this.addBonus();
     }
