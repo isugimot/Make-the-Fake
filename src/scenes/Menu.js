@@ -6,46 +6,39 @@ class Menu extends Phaser.Scene {
 
     preload(){
         this.load.path = './assets/';
-        this.load.audio('loopBGM', 'audio/loopBGM.mp3');
-
-        this.load.audio('bonus', 'audio/bonus.mp3');
-        this.load.audio('death', 'audio/death.mp3');
-        this.load.audio('retry', 'audio/retry.mp3');
-        this.load.audio('start', 'audio/start.mp3');
-
-        this.load.image('player', 'img/player.png');
-        this.load.image('bonus', 'img/bonus.png');
-        this.load.image('starfield', 'img/starfield.png');
-        this.load.image('starfield2', 'img/starfield2.png');
-        this.load.spritesheet('missle', 'img/rocket.png', {frameWidth: 50, frameHeight: 20,startFrame: 0, endFrame: 3});
+        this.load.audio('BGM', 'audio/BGM.mp3')
+        this.load.audio('hit', 'audio/hit.mp3')
+        this.load.image('field', 'img/field.png');
         this.load.bitmapFont('gem', 'font/gem.png', 'font/gem.xml');
+        this.load.image('dot', 'img/dot.png');
+        this.load.image('ball', 'img/ball.png')
     }
 
 
     create(){
-
-        this.anims.create({
-            key: 'rocket',
-            frames: this.anims.generateFrameNumbers('missle', {
-                start: 0,
-                end: 3,
-                first: 0
-            }),
-            frameRate: 30,
-            repeat: -1
-        });
-        this.add.bitmapText(centerX, centerY, 'gem', 'SPACE RUNNER', 64).setOrigin(0.5).setTint(0xffff00);
+        strike = 0;
+        round = 1;
+        point = 0;
+        point2 = 0;
+        this.add.bitmapText(centerX, centerY, 'gem', 'OH! THAT\'S A BASEBALL!', 44).setOrigin(0.5).setTint(0xffff00);
         this.add.bitmapText(centerX, centerY+100, 'gem', 'PRESS UP ARROW TO START').setOrigin(0.5).setTint(0xffff00);
-        this.add.bitmapText(centerX, centerY+150, 'gem', 'USE UP AND DOWN ARROW TO MOVE').setOrigin(0.5).setTint(0xffff00);
-        this.add.bitmapText(centerX, centerY+200, 'gem', 'Music by Maksym Dudchyk from Pixabay, SE from Pixabay', 10).setOrigin(0.5).setTint(0xffff00);
+        this.add.bitmapText(centerX, centerY+150, 'gem', 'Most of the code is incomplete').setOrigin(0.5).setTint(0xffff00);
+        this.add.bitmapText(centerX, centerY+200, 'gem', 'Music by Music by u_4rz47emqxz from Pixabay', 10).setOrigin(0.5).setTint(0xffff00);
         cursors = this.input.keyboard.createCursorKeys();
     }
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(cursors.up)){
-            this.sound.play('start');
-            this.cameras.main.flash(2000);
-            this.time.delayedCall(2000, () => {this.scene.start('PlayScene')});
+            //this.scene.start('WriteScene')
+            //WriteScene is not working currently
+            this.bgm = this.sound.add('BGM', {
+                mute: false,
+                volume: 1,
+                rate: 1,
+                loop: true
+            });
+            this.bgm.play();
+            this.scene.start('PlayScene')
         }
     }
 }
