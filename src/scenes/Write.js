@@ -4,7 +4,8 @@ class Write extends Phaser.Scene {
     }
 
     create(){
-        const Player = 1;
+        //Some codes I gave up on
+        /*const Player = 1;
         const Mode = 1;
         const Area1 = this.add.renderTexture(64, 64, 128, 128).setInteractive().setDepth(1001);
         this.add.graphics().fillStyle(0x000000).lineStyle(1, 0xffffff).fillRect(0, 0, 128, 128).strokeRect(0, 0, 128, 128).setDepth(1000);
@@ -21,12 +22,32 @@ class Write extends Phaser.Scene {
             if (pointer.isDown){
                 Area1.draw('dot', pointer.x - 8, pointer.y - 8);
             }
-        });
+        });*/
+        this.field = this.add.tileSprite(0, 0, 640, 500, 'field').setOrigin(0, 0);
+        this.add.bitmapText(centerX, centerY - 150, 'gem', 'CHOOSE YOUR CHARACTER').setOrigin(0.5);
+        this.Face1 = this.add.sprite(centerX/3, centerY, 'Face1').setScale(4).preFX.addGlow();
+        this.Face2 = this.add.sprite(centerX*1.66, centerY, 'Face2').setScale(4).preFX.addGlow();
+        this.Face2.active = false;
+        this.add.bitmapText(centerX, centerY + 150, 'gem', 'LEFT OR RIGHT KEY TO CHOOSE').setOrigin(0.5).setTint(0x000000);
+        this.add.bitmapText(centerX, centerY + 200, 'gem', 'PRESS UP TO PLAY BALL').setOrigin(0.5).setTint(0x000000);
+        cursors = this.input.keyboard.createCursorKeys();
     }
 
     update(){
+        if(Phaser.Input.Keyboard.JustDown(cursors.left)){
+            skin = 1;
+            this.Face1.active = true;
+            this.Face2.active = false;
+        }else if(Phaser.Input.Keyboard.JustDown(cursors.right)){
+            skin = 2
+            this.Face1.active = false;
+            this.Face2.active = true;
+        }
+
         if(Phaser.Input.Keyboard.JustDown(cursors.up)){
-            this.scene.start('PlayScene')
+            this.sound.play('start');
+            this.cameras.main.flash(2000);
+            this.time.delayedCall(2000, () => {this.scene.start('PlayScene')});
         }
     }
 }

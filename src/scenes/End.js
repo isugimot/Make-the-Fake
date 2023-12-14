@@ -4,34 +4,38 @@ class End extends Phaser.Scene {
     }
 
     create(){
-        this.totalS = point;
-        if(localStorage.getItem('hiscore') != null) {
-            let storedScore = parseInt(localStorage.getItem('hiscore'));
-            if(this.totalS > storedScore){
-                localStorage.setItem('hiscore', this.totalS.toString());
-                highScore = this.totalS;
-                newHighScore = true;
-            } else {
-                highScore = parseInt(localStorage.getItem('hiscore'));
-                newHighScore = false;
-            }
-        }else {
-            highScore = this.totalS;
-            localStorage.setItem('hiscore', highScore.toString());
-            newHighScore = true;
-        }
-        if(newHighScore) {
-            this.add.bitmapText(centerX, centerY - 100, 'gem', 'New Hi-Score', 32).setOrigin(0.5);
-        }
         if(point > point2){
-            this.add.bitmapText(centerX, centerY - 200, 'gem', 'YOU WIN', 50).setOrigin(0.5);
+            this.add.bitmapText(centerX, centerY - 100, 'gem', 'PLAYER 1 WIN', 50).setOrigin(0.5);
+            if(point2 == 0){
+                this.called = this.add.bitmapText(centerX, centerY - 50, 'gem', 'CALLED GAME').setOrigin(0.5);
+
+                this.emitter = this.add.particles(0, 0, 'dot', {
+                    alpha: 0.1,
+                    speed: 24,
+                    lifespan: 1500,
+                    quantity: 10,
+                    scale: { start: 0.4, end: 0 },
+                    emitZone: { type: 'edge', source: this.called.getBounds(), quantity: 42 },
+                });
+            }
         } else if (point < point2){
-            this.add.bitmapText(centerX, centerY - 200, 'gem', 'YOU LOSE', 50).setOrigin(0.5);
-        } else if (point == point2){
-            this.add.bitmapText(centerX, centerY - 200, 'gem', 'DRAW', 50).setOrigin(0.5);
+            this.add.bitmapText(centerX, centerY - 100, 'gem', 'PLAYER 2 WIN', 50).setOrigin(0.5);
+            if(point == 0){
+                this.called = this.add.bitmapText(centerX, centerY - 50, 'gem', 'CALLED GAME').setOrigin(0.5);
+
+                this.emitter = this.add.particles(0, 0, 'dot', {
+                    alpha: 0.1,
+                    speed: 24,
+                    lifespan: 1500,
+                    quantity: 10,
+                    scale: { start: 0.4, end: 0 },
+                    emitZone: { type: 'edge', source: this.called.getBounds(), quantity: 42 },
+                });
+
+            }
         }
-        this.add.bitmapText(centerX, centerY, 'gem', 'Score: ' + this.totalS, 48).setOrigin(0.5);
-        this.add.bitmapText(centerX, centerY + 100, 'gem', 'Best Score: '+ highScore, 24).setOrigin(0.5);
+
+        this.add.bitmapText(centerX, centerY, 'gem', point + ' : ' + point2, 48).setOrigin(0.5);
         this.add.bitmapText(centerX, centerY + 200, 'gem', 'Press UP ARROW to Restart', 36).setOrigin (0.5);
         
         cursors = this.input.keyboard.createCursorKeys();
@@ -41,10 +45,10 @@ class End extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(cursors.up)){
             //Planning to jump to the WriteScene in the final product
             strike = 0;
-            round = 1;
             point = 0;
             point2 = 0;
-            this.scene.start('PlayScene')
+            pointMax = 0;
+            this.scene.start('WriteScene')
         }
     }
 }

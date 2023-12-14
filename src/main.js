@@ -1,6 +1,8 @@
 // Ichiro Sugimoto
 // Oh! That's a Baseball
-// 
+// Used components: Physics systems, timers, text objects, tween manager, pipeline FX, particle effects
+
+
 'use strict';
 
 let config = {
@@ -20,7 +22,7 @@ let config = {
             }
         }
     },
-    scene: [ Menu, Write, Play, Play2, End ]
+    scene: [ Menu, Write, Play, End ]
 }
 
 let game = new Phaser.Game(config);
@@ -29,10 +31,12 @@ let centerX = game.config.width/2;
 let centerY = game.config.height/2;
 let gameX = game.config.width;
 let gameY = game.config.height;
+let skin = 1;
 let strike = 0;
-let round = 1;
+let side = 1;
 let point = 0;
 let point2 = 0;
+let pointMax = 0;
 let highScore = 0;
 let newHighScore = false;
 let ballVelocity = 300;
