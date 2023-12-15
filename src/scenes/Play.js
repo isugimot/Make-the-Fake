@@ -7,6 +7,7 @@ class Play extends Phaser.Scene {
         //Adding the sprites and texts.
         game.canTweenFlag = true;
         game.spaceDown = false;
+        game.whistleFlag = true;
         strike = 0;
         this.field = this.add.tileSprite(0, 0, 640, 500, 'field').setOrigin(0, 0);
         this.score = this.add.bitmapText(0, 20, 'gem', 'Player ' + side + ': ' + point).setOrigin(0, 0.5);
@@ -95,6 +96,10 @@ class Play extends Phaser.Scene {
 
         } else if (strike == 3){
             //Change side if thereare 3 strikes. It should be 9 strikes in the real baseball, but I felt that it will be too long as a game.
+            if(game.whistleFlag == true){
+                this.sound.play('whistle');
+                game.whistleFlag = false;
+            }
             this.ballGroup.clear();
             this.bat.destroy();
             //Clearing and destroying ball and bat so that there will be no more motion.
@@ -110,7 +115,15 @@ class Play extends Phaser.Scene {
         }
         if (pointMax == 5){
             //The original scene on the Jojo anime ended ad 5:4, so the first player to reach 5 points will win.
-            this.scene.start('EndScene')
+            if(game.whistleFlag == true){
+                this.sound.play('last');
+                game.whistleFlag = false;
+            }
+            this.ballGroup.clear();
+            this.bat.destroy();
+            this.cameras.main.flash(1000);
+            this.time.delayedCall(1000, () => {this.cameras.main.flash(1000)});
+            this.time.delayedCall(2000, () => {this.scene.start('EndScene')});
         }
     }
 

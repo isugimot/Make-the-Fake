@@ -31,6 +31,7 @@ class Write extends Phaser.Scene {
         this.Face2.active = false;
         this.add.bitmapText(centerX, centerY + 150, 'gem', 'LEFT OR RIGHT KEY TO CHOOSE').setOrigin(0.5).setTint(0x000000);
         this.add.bitmapText(centerX, centerY + 200, 'gem', 'PRESS UP TO PLAY BALL').setOrigin(0.5).setTint(0x000000);
+        this.add.bitmapText(centerX, centerY + 230, 'gem', 'THE FIRST TO REACH 5 POINT WILL WIN', 20).setOrigin(0.5).setTint(0x000000);
         cursors = this.input.keyboard.createCursorKeys();
     }
 

@@ -39,6 +39,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
         if(this.y > game.config.height){
             this.destroy();
             strike += 1;
+            this.parentScene.sound.play('catch');
             if(strike < 3){
                 this.parentScene.time.delayedCall(2500, () => {
                     this.parentScene.addBall(this.parent, this.velocity);

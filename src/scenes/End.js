@@ -36,6 +36,7 @@ class End extends Phaser.Scene {
             }
         }
         //Showing the point and the text.
+        this.sound.play('over');
         this.add.bitmapText(centerX, centerY, 'gem', point + ' : ' + point2, 48).setOrigin(0.5);
         this.add.bitmapText(centerX, centerY + 200, 'gem', 'Press UP ARROW to Restart', 36).setOrigin (0.5);
         

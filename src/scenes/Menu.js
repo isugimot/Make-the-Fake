@@ -9,9 +9,13 @@ class Menu extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.audio('BGM', 'audio/BGM.mp3');
         this.load.audio('hit', 'audio/hit.mp3');
+        this.load.audio('catch', 'audio/catch.mp3');
         this.load.audio('throw', 'audio/Pitcher.mp3');
         this.load.audio('point', 'audio/point.mp3');
         this.load.audio('start', 'audio/click-124467.mp3');
+        this.load.audio('whistle', 'audio/whistle.mp3');
+        this.load.audio('over', 'audio/over.mp3');
+        this.load.audio('last', 'audio/last.mp3');
 
         this.load.image('field', 'img/field.png');
         
