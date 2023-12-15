@@ -1,9 +1,11 @@
 class Ball extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity, type){
+        //Set the position where the ball is thrown and also set some of the values
         super(scene, game.config.width/2, game.config.height/3, 'ball', 0);
         this.parentScene = scene;
         this.parentScene.add.existing(this);
         this.parentScene.physics.add.existing(this);
+        //Checks what type of ball to throw
         if(type == 0){
             this.parentScene.physics.moveTo(this, centerX, centerY*1.5, this.velocity, 300);
         }
@@ -28,10 +30,12 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
                 this.setVelocityY(velocity);
             });
         }
+        //Set bounce so the ball can be hit
         this.body.setBounce(20, 20);
     }
 
     update(){
+        //Check if the ball wasn't or was hit by the bat.
         if(this.y > game.config.height){
             this.destroy();
             strike += 1;

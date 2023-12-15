@@ -4,6 +4,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //Adding the sprites and texts.
         game.canTweenFlag = true;
         game.spaceDown = false;
         strike = 0;
@@ -28,6 +29,7 @@ class Play extends Phaser.Scene {
         });
         this.pitcher = this.add.sprite(centerX, centerY/3 + 50, 'Pitcher').setScale(4);
 
+        //Change the face of the characters depending on who's round it is and which character was chosen.
         if(skin == 1 && side == 1){
             this.head1 = this.add.sprite(centerX - 47, centerY*1.45, 'Face1')
             this.head2 = this.add.sprite(centerX, centerY/3 + 40, 'Face2')
@@ -46,6 +48,7 @@ class Play extends Phaser.Scene {
     }
 
     addBall(){
+        //Adding a ball with a random type.
         let speedVariance = Phaser.Math.Between(0, 50);
         let random = Math.floor(Math.random() *4);
         let ball = new Ball(this, ballVelocity + speedVariance, random);
@@ -54,7 +57,9 @@ class Play extends Phaser.Scene {
     }
 
     update(){
+        //Checking the larger of the two points
         pointMax = Math.max(point, point2);
+        //Check which side is currently playing.
         if(side == 1){
             this.score.text = 'Player ' + side + ': ' + point;
         } else if(side == 2){
@@ -62,6 +67,7 @@ class Play extends Phaser.Scene {
         }
 
         if(strike < 3){
+            //Press space to swing the bat and hit the ball.
             if(cursors.space.isDown && game.canTweenFlag == true && game.spaceDown == false){
                 game.spaceDown = true;
                 game.canTweenFlag = false;
@@ -88,8 +94,10 @@ class Play extends Phaser.Scene {
             this.physics.world.collide(this.bat, this.ballGroup, this.ballCollision, null, this);
 
         } else if (strike == 3){
+            //Change side if thereare 3 strikes. It should be 9 strikes in the real baseball, but I felt that it will be too long as a game.
             this.ballGroup.clear();
             this.bat.destroy();
+            //Clearing and destroying ball and bat so that there will be no more motion.
             this.add.bitmapText(centerX, centerY, 'gem', 'PRESS UP TO CHANGE SIDE', 24).setOrigin(0.5);
             if(Phaser.Input.Keyboard.JustDown(cursors.up)){
                 if(side == 1){
@@ -101,10 +109,12 @@ class Play extends Phaser.Scene {
             };
         }
         if (pointMax == 5){
+            //The original scene on the Jojo anime ended ad 5:4, so the first player to reach 5 points will win.
             this.scene.start('EndScene')
         }
     }
 
+    //Just a simple code that makes some sound.
     ballCollision(){
         this.sound.play('hit');
     }

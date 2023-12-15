@@ -5,6 +5,7 @@ class Menu extends Phaser.Scene {
 
 
     preload(){
+        //Loading the assets
         this.load.path = './assets/';
         this.load.audio('BGM', 'audio/BGM.mp3');
         this.load.audio('hit', 'audio/hit.mp3');
@@ -27,6 +28,7 @@ class Menu extends Phaser.Scene {
 
 
     create(){
+        //Setting values and texts
         skin = 1;
         strike = 0;
         point = 0;
@@ -42,8 +44,7 @@ class Menu extends Phaser.Scene {
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(cursors.up)){
-            //this.scene.start('WriteScene')
-            //WriteScene is not working currently
+            //Move on to the write scene.
             this.bgm = this.sound.add('BGM', {
                 mute: false,
                 volume: 1,

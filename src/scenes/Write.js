@@ -23,6 +23,7 @@ class Write extends Phaser.Scene {
                 Area1.draw('dot', pointer.x - 8, pointer.y - 8);
             }
         });*/
+        //Just adding the sprites and texts.
         this.field = this.add.tileSprite(0, 0, 640, 500, 'field').setOrigin(0, 0);
         this.add.bitmapText(centerX, centerY - 150, 'gem', 'CHOOSE YOUR CHARACTER').setOrigin(0.5);
         this.Face1 = this.add.sprite(centerX/3, centerY, 'Face1').setScale(4).preFX.addGlow();
@@ -34,6 +35,7 @@ class Write extends Phaser.Scene {
     }
 
     update(){
+        //Check which character was chosen
         if(Phaser.Input.Keyboard.JustDown(cursors.left)){
             skin = 1;
             this.Face1.active = true;

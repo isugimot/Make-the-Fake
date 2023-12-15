@@ -4,6 +4,7 @@ class End extends Phaser.Scene {
     }
 
     create(){
+        //Showing which side won.
         if(point > point2){
             this.add.bitmapText(centerX, centerY - 100, 'gem', 'PLAYER 1 WIN', 50).setOrigin(0.5);
             if(point2 == 0){
@@ -34,7 +35,7 @@ class End extends Phaser.Scene {
 
             }
         }
-
+        //Showing the point and the text.
         this.add.bitmapText(centerX, centerY, 'gem', point + ' : ' + point2, 48).setOrigin(0.5);
         this.add.bitmapText(centerX, centerY + 200, 'gem', 'Press UP ARROW to Restart', 36).setOrigin (0.5);
         
@@ -43,11 +44,13 @@ class End extends Phaser.Scene {
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(cursors.up)){
-            //Planning to jump to the WriteScene in the final product
+            //Reset the value and restart
             strike = 0;
             point = 0;
             point2 = 0;
             pointMax = 0;
+            skin = 1;
+            side = 1;
             this.scene.start('WriteScene')
         }
     }
